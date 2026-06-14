@@ -1,0 +1,249 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  /* Atualizado para cores que remetem a um ambiente de estádio/futebol */
+  background: linear-gradient(135deg, #114b27, #0d2c16);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.urna-container {
+  background: #c8c8c8;
+  padding: 25px;
+  border-radius: 20px;
+  display: flex;
+  gap: 25px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.tela {
+  width: 550px;
+  background: #fff;
+  border: 10px solid #888;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.topo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.topo h1 {
+  font-size: 26px; /* Ajustado levemente para não quebrar títulos maiores */
+  color: #222;
+}
+
+.conteudo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.esquerda {
+  width: 65%;
+}
+
+.cargo {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.numeros {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.numero {
+  width: 65px;
+  height: 75px;
+  border: 2px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+/* Opcional: Se quiser que o campo pisque apenas enquanto estiver vazio */
+.numero:empty {
+  animation: pisca 1s infinite;
+}
+
+@keyframes pisca {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+.info p {
+  margin-bottom: 12px;
+  font-size: 18px;
+  color: #444;
+}
+
+.direita {
+  width: 30%; /* Aumentado levemente para dar destaque à bandeira */
+  display: flex;
+  justify-content: center;
+}
+
+.direita img {
+  width: 100%;
+  max-height: 120px;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  object-fit: contain; /* Garante que a bandeira mantenha a proporção sem distorcer */
+  display: none;
+}
+
+.mensagem {
+  margin-top: 20px;
+  font-size: 24px;
+  color: #cc0000;
+  font-weight: bold;
+}
+
+.rodape {
+  margin-top: 25px;
+  border-top: 2px solid #ccc;
+  padding-top: 10px;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.4;
+}
+
+.teclado {
+  background: #2d2d2d;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.teclas-numericas {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  gap: 12px;
+}
+
+.teclas-numericas button {
+  height: 60px;
+  font-size: 28px;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px #000;
+  transition: all 0.1s ease;
+}
+
+.teclas-numericas button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px #000;
+}
+
+.zero {
+  grid-column: 2;
+}
+
+.funcoes {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.funcoes button {
+  flex: 1;
+  height: 60px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px rgba(0,0,0,0.3);
+  transition: all 0.1s ease;
+}
+
+.funcoes button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px rgba(0,0,0,0.3);
+}
+
+.branco {
+  background: #fff;
+  color: #000;
+}
+
+.corrige {
+  background: #f05a28;
+  color: #000;
+}
+
+.confirma {
+  background: #00a651;
+  color: #fff;
+  font-size: 16px;
+}
+
+.fim {
+  font-size: 70px;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+  margin-top: 60px;
+  color: #000;
+  animation: fim 1s infinite alternate;
+}
+
+@keyframes fim {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}
+
+.relatorios {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+}
+
+.relatorios button {
+  padding: 14px 22px;
+  background: #facc15; /* Cor amarela para destacar os botões de relatório */
+  color: #111;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+}
+
+.relatorios button:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 900px) {
+  .urna-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tela {
+    width: 100%;
+  }
+}
