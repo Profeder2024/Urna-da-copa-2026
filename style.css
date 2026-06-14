@@ -26,6 +26,7 @@ body {
 
 .tela {
   width: 550px;
+  height: 420px; /* Altura fixa para estabilizar o layout */
   background: #fff;
   border: 10px solid #888;
   padding: 20px;
@@ -36,100 +37,118 @@ body {
 
 .topo {
   text-align: center;
-  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
 }
 
 .topo h1 {
-  font-size: 26px;
+  font-size: 24px;
   color: #222;
+  letter-spacing: 1px;
 }
 
 .conteudo {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  flex: 1;
+  margin-top: 15px;
 }
 
 .esquerda {
-  width: 65%;
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .cargo {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 25px;
-  color: #333;
+  margin-bottom: 15px;
+  color: #111;
 }
 
 .numeros {
   display: flex;
   gap: 10px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 .numero {
-  width: 65px;
-  height: 75px;
+  width: 60px;
+  height: 70px;
   border: 2px solid #000;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 40px;
+  font-size: 38px;
   font-weight: bold;
 }
 
+/* Efeito de piscar nos quadradinhos vazios */
 .numero:empty {
   animation: pisca 1s infinite;
 }
 
 @keyframes pisca {
-  0% { opacity: 0.3; }
+  0% { opacity: 0.2; }
   50% { opacity: 1; }
-  100% { opacity: 0.3; }
+  100% { opacity: 0.2; }
 }
 
 .info p {
-  margin-bottom: 12px;
-  font-size: 18px;
-  color: #444;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333;
 }
 
+/* Moldura para receber a imagem JPG da pasta local */
 .direita {
-  width: 30%;
+  width: 35%;
+  height: 180px;
   display: flex;
   justify-content: center;
+  align-items: center;
+  border: 2px dashed #bbb; /* Identifica a área da foto sutilmente */
+  background-color: #fafafa;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .direita img {
   width: 100%;
-  max-height: 120px;
-  border: 1px solid #ccc;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-  object-fit: contain;
-  display: none;
+  height: 100%;
+  object-fit: cover; /* Faz a imagem preencher o espaço sem distorcer */
+  display: none; /* Inicia oculta e o JS ativa */
 }
 
 .mensagem {
-  margin-top: 20px;
-  font-size: 24px;
-  color: #cc0000;
+  margin-top: 10px;
+  font-size: 22px;
+  color: #d32f2f;
   font-weight: bold;
 }
 
 .rodape {
-  margin-top: 25px;
-  border-top: 2px solid #ccc;
-  padding-top: 10px;
-  font-size: 13px;
-  color: #555;
+  border-top: 2px solid #333;
+  padding-top: 8px;
+  font-size: 12px;
+  color: #444;
   line-height: 1.4;
+  text-transform: uppercase;
 }
 
+/* ESTILIZAÇÃO DO TECLADO */
 .teclado {
   background: #2d2d2d;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .teclas-numericas {
@@ -146,13 +165,13 @@ body {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 4px #000;
-  transition: all 0.1s ease;
+  box-shadow: 0 4px 0 #000;
+  transition: all 0.05s ease;
 }
 
 .teclas-numericas button:active {
   transform: translateY(3px);
-  box-shadow: 0 1px #000;
+  box-shadow: 0 1px 0 #000;
 }
 
 .zero {
@@ -167,23 +186,24 @@ body {
 
 .funcoes button {
   flex: 1;
-  height: 60px;
+  height: 55px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
-  box-shadow: 0 4px rgba(0,0,0,0.3);
-  transition: all 0.1s ease;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+  transition: all 0.05s ease;
+  text-transform: uppercase;
 }
 
 .funcoes button:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px rgba(0,0,0,0.3);
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 }
 
 .branco {
-  background: #fff;
+  background: #ffffff;
   color: #000;
 }
 
@@ -195,24 +215,23 @@ body {
 .confirma {
   background: #00a651;
   color: #fff;
-  font-size: 16px;
+  font-size: 15px;
 }
 
+/* TELA DE FIM */
 .fim {
-  font-size: 70px;
+  font-size: 75px;
   font-weight: bold;
   width: 100%;
   text-align: center;
-  margin-top: 60px;
   color: #000;
-  animation: fim 1s infinite alternate;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
 }
 
-@keyframes fim {
-  from { opacity: 0.5; }
-  to { opacity: 1; }
-}
-
+/* PAINEL DE RELATÓRIOS INFERIORES */
 .relatorios {
   margin-top: 25px;
   display: flex;
@@ -220,21 +239,23 @@ body {
 }
 
 .relatorios button {
-  padding: 14px 22px;
+  padding: 12px 20px;
   background: #facc15;
   color: #111;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s;
+  transition: transform 0.1s, background-color 0.2s;
 }
 
 .relatorios button:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
+  background: #eab308;
 }
 
+/* RESPONSIVIDADE PARA TELAS MENORES */
 @media (max-width: 900px) {
   .urna-container {
     flex-direction: column;
@@ -242,6 +263,16 @@ body {
   }
 
   .tela {
+    width: 100%;
+    height: auto;
+  }
+  
+  .conteudo {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .esquerda, .direita {
     width: 100%;
   }
 }
