@@ -1,3 +1,4 @@
+// Banco de dados oficial das 48 seleções da Copa 2026
 const candidatos = {
   "01": { nome: "Canadá", continente: "América do Norte", titulos: "0" },
   "02": { nome: "Estados Unidos", continente: "América do Norte", titulos: "0" },
@@ -51,24 +52,40 @@ const candidatos = {
 
 let numeroDigitado = "";
 
+// Estrutura de armazenamento dos votos consumados
 const contagemVotos = {
   BRANCO: 0,
   NULO: 0
 };
 
-// Inicializa a contagem de votos zerada para todos os países
+// Inicializa a contagem zerada para todos os países dinamicamente
 for (let key in candidatos) {
   contagemVotos[key] = 0;
 }
 
+// Links alternativos e estáveis de áudio na nuvem
+const sons = {
+  somTecla: "https://audio.code.org/click.mp3",
+  somConfirma: "https://assets.mixkit.co/active_storage/sfx/2568/2568-84.wav"
+};
+
+// Função inteligente de reprodução sonora (evita bloqueios de Autoplay)
 function tocarSom(tipo) {
-  const audio = document.getElementById(tipo);
-  if (audio) {
-    audio.currentTime = 0;
-    audio.play().catch(err => console.log("Áudio ignorado até interação inicial do usuário."));
+  try {
+    const audioUrl = sons[tipo];
+    if (audioUrl) {
+      const somDinamico = new Audio(audioUrl);
+      somDinamico.currentTime = 0;
+      somDinamico.play().catch(err => {
+        console.log("O navegador bloqueou a execução inicial de áudio automático.");
+      });
+    }
+  } catch (erro) {
+    console.log("Erro no barramento de áudio:", erro);
   }
 }
 
+// Lógica de inserção numérica
 function clicou(n) {
   if (numeroDigitado.length < 2) {
     numeroDigitado += n.toString();
@@ -77,6 +94,7 @@ function clicou(n) {
   }
 }
 
+// Renderização dinâmica da tela da urna eletrônica
 function atualizarTela() {
   document.getElementById("n1").innerText = numeroDigitado[0] || "";
   document.getElementById("n2").innerText = numeroDigitado[1] || "";
@@ -89,8 +107,7 @@ function atualizarTela() {
     document.getElementById("time").innerText = candidato.continente;
     document.getElementById("posicao").innerText = candidato.titulos;
 
-    // BUSCA A IMAGEM JPG DIRETO DA PASTA LOCAL USANDO O NÚMERO
-    // Exemplo: se digitar 13, vai carregar "13.jpg"
+    // Busca o arquivo JPG local nomeado com o número digitado (Ex: "13.jpg")
     foto.src = `${numeroDigitado}.jpg`;
     foto.style.display = "block";
     document.getElementById("mensagem").innerText = "";
@@ -106,6 +123,7 @@ function atualizarTela() {
   }
 }
 
+// Comando de voto em Branco
 function branco() {
   numeroDigitado = "";
   document.getElementById("n1").innerText = "";
@@ -118,6 +136,7 @@ function branco() {
   tocarSom("somTecla");
 }
 
+// Comando de correção da tela
 function corrige() {
   numeroDigitado = "";
   document.getElementById("n1").innerText = "";
@@ -130,9 +149,10 @@ function corrige() {
   tocarSom("somTecla");
 }
 
+// Confirmação final do voto computado
 function confirma() {
   if (numeroDigitado.length === 1) {
-    alert("Digite os 2 números");
+    alert("Por favor, digite os 2 números correspondentes à seleção.");
     return;
   }
 
@@ -146,6 +166,7 @@ function confirma() {
     contagemVotos.NULO++;
   }
 
+  // Exibe tela oficial de FIM temporariamente
   document.getElementById("conteudo").innerHTML = `
     <div class="fim">FIM</div>
   `;
@@ -155,6 +176,7 @@ function confirma() {
   }, 2500);
 }
 
+// Restaura a estrutura de layouts originais pós-votação
 function restaurarTela() {
   numeroDigitado = "";
   document.getElementById("conteudo").innerHTML = `
@@ -177,34 +199,37 @@ function restaurarTela() {
   `;
 }
 
+// Gerador numérico de validação dos relatórios impressos
 function gerarProtocolo() {
   return Math.floor(Math.random() * 999999999);
 }
 
+// Mecanismo de impressão em Pop-up nativo
 function abrirRelatorio(texto) {
   const janela = window.open("", "", "width=500,height=700");
   if (!janela) {
-    alert("Por favor, ative os Pop-ups do seu navegador para exibir os relatórios!");
+    alert("Por favor, ative as permissões de Pop-up do seu navegador para visualizar este relatório!");
     return;
   }
   janela.document.write(`
     <html>
       <head>
-        <title>Relatório da Urna</title>
+        <title>Relatório da Urna Oficial</title>
         <style>
-          body { font-family: monospace; padding: 20px; background: #fff; }
-          button { padding: 10px 20px; margin-top: 20px; cursor: pointer; font-size: 16px; }
+          body { font-family: monospace; padding: 20px; background: #fff; color: #000; }
+          button { padding: 10px 20px; margin-top: 20px; cursor: pointer; font-size: 16px; font-weight: bold; }
           pre { font-size: 15px; white-space: pre-wrap; }
         </style>
       </head>
       <body>
         <pre>${texto}</pre>
-        <button onclick="window.print()">IMPRIMIR</button>
+        <button onclick="window.print()">IMPRIMIR DOCUMENTO</button>
       </body>
     </html>
   `);
 }
 
+// Relatório Impresso Pré-votação (Zerésima)
 function gerarZeresima() {
   let linhasCandidatos = "";
   for (let key in candidatos) {
@@ -220,25 +245,28 @@ SIMULADOR COPA DO MUNDO 2026
 Data: ${new Date().toLocaleDateString()}
 Hora: ${new Date().toLocaleTimeString()}
 
-PROTOCOLO: ${gerarProtocolo()}
+PROTOCOLO EMISSÃO: ${gerarProtocolo()}
 ====================================
 
 ${linhasCandidatos}
 Brancos: 0
 Nulos: 0
 ====================================
-URNA ZERADA COM SUCESSO
+COMPROVADO: URNA SEM VOTOS COMPUTADOS
 ====================================
 `;
   abrirRelatorio(texto);
 }
 
+// Relatório Impresso Pós-votação (Boletim de Urna)
 function gerarBoletim() {
   let total = 0;
   let linhasCandidatos = "";
 
   for (let key in candidatos) {
-    linhasCandidatos += `${candidatos[key].nome} (${key}):\n${contagemVotos[key]} votos\n\n`;
+    if (contagemVotos[key] > 0) {
+      linhasCandidatos += `${candidatos[key].nome} (${key}): ${contagemVotos[key]} voto(s)\n`;
+    }
     total += contagemVotos[key];
   }
   
@@ -253,24 +281,22 @@ SIMULADOR COPA DO MUNDO 2026
 Data: ${new Date().toLocaleDateString()}
 Hora: ${new Date().toLocaleTimeString()}
 
-PROTOCOLO: ${gerarProtocolo()}
+PROTOCOLO EMISSÃO: ${gerarProtocolo()}
 ====================================
+VOTOS NOMINAIS COMPUTADOS:
 
-${linhasCandidatos}
-Brancos:
-${contagemVotos.BRANCO}
-
-Nulos:
-${contagemVotos.NULO}
+${linhasCandidatos || "Nenhum país recebeu votos.\n"}
+------------------------------------
+VOTOS EM BRANCO: ${contagemVotos.BRANCO}
+VOTOS NULOS: ${contagemVotos.NULO}
 ====================================
-TOTAL DE VOTOS:
-${total}
+TOTAL GERAL DE VOTOS DA URNA: ${total}
 ====================================
 `;
   abrirRelatorio(texto);
 }
 
-// Ouvinte do teclado físico do computador
+// Mapeamento e escuta do teclado numérico físico do computador
 window.addEventListener("keydown", (e) => {
   if (!isNaN(e.key) && e.key !== " ") {
     clicou(e.key);
