@@ -6,7 +6,6 @@
 }
 
 body {
-  /* Atualizado para cores que remetem a um ambiente de estádio/futebol */
   background: linear-gradient(135deg, #114b27, #0d2c16);
   min-height: 100vh;
   display: flex;
@@ -41,7 +40,7 @@ body {
 }
 
 .topo h1 {
-  font-size: 26px; /* Ajustado levemente para não quebrar títulos maiores */
+  font-size: 26px;
   color: #222;
 }
 
@@ -79,7 +78,6 @@ body {
   font-weight: bold;
 }
 
-/* Opcional: Se quiser que o campo pisque apenas enquanto estiver vazio */
 .numero:empty {
   animation: pisca 1s infinite;
 }
@@ -97,7 +95,7 @@ body {
 }
 
 .direita {
-  width: 30%; /* Aumentado levemente para dar destaque à bandeira */
+  width: 30%;
   display: flex;
   justify-content: center;
 }
@@ -107,7 +105,7 @@ body {
   max-height: 120px;
   border: 1px solid #ccc;
   box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-  object-fit: contain; /* Garante que a bandeira mantenha a proporção sem distorcer */
+  object-fit: contain;
   display: none;
 }
 
@@ -223,7 +221,7 @@ body {
 
 .relatorios button {
   padding: 14px 22px;
-  background: #facc15; /* Cor amarela para destacar os botões de relatório */
+  background: #facc15;
   color: #111;
   border: none;
   border-radius: 10px;
