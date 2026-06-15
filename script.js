@@ -63,10 +63,10 @@ for (let key in candidatos) {
   contagemVotos[key] = 0;
 }
 
-// Links alternativos e estáveis de áudio na nuvem
+// Configuração dos áudios apontando para o ficheiro local upado no repositório
 const sons = {
-  somTecla: "https://audio.code.org/click.mp3",
-  somConfirma: "https://assets.mixkit.co/active_storage/sfx/2568/2568-84.wav"
+  somTecla: "./confirma-urna.mp3",
+  somConfirma: "./confirma-urna.mp3"
 };
 
 // Função inteligente de reprodução sonora (evita bloqueios de Autoplay)
@@ -107,8 +107,8 @@ function atualizarTela() {
     document.getElementById("time").innerText = candidato.continente;
     document.getElementById("posicao").innerText = candidato.titulos;
 
-    // Busca o arquivo JPG local nomeado com o número digitado (Ex: "13.jpg")
-    foto.src = `${numeroDigitado}.jpg`;
+    // Busca o arquivo JPG local na mesma diretoria (Ex: "./13.jpg")
+    foto.src = `./${numeroDigitado}.jpg`;
     foto.style.display = "block";
     document.getElementById("mensagem").innerText = "";
   } else {
@@ -222,7 +222,7 @@ function abrirRelatorio(texto) {
         </style>
       </head>
       <body>
-        <pre>${texto}</pre>
+        <pre>\${texto}</pre>
         <button onclick="window.print()">IMPRIMIR DOCUMENTO</button>
       </body>
     </html>
@@ -233,7 +233,7 @@ function abrirRelatorio(texto) {
 function gerarZeresima() {
   let linhasCandidatos = "";
   for (let key in candidatos) {
-    linhasCandidatos += `${candidatos[key].nome} (${key}): 0 votos\n`;
+    linhasCandidatos += `\${candidatos[key].nome} (\${key}): 0 votos\n`;
   }
 
   let texto = `
@@ -242,13 +242,13 @@ function gerarZeresima() {
 ====================================
 SIMULADOR COPA DO MUNDO 2026
 
-Data: ${new Date().toLocaleDateString()}
-Hora: ${new Date().toLocaleTimeString()}
+Data: \${new Date().toLocaleDateString()}
+Hora: \${new Date().toLocaleTimeString()}
 
-PROTOCOLO EMISSÃO: ${gerarProtocolo()}
+PROTOCOLO EMISSÃO: \${gerarProtocolo()}
 ====================================
 
-${linhasCandidatos}
+\${linhasCandidatos}
 Brancos: 0
 Nulos: 0
 ====================================
@@ -265,7 +265,7 @@ function gerarBoletim() {
 
   for (let key in candidatos) {
     if (contagemVotos[key] > 0) {
-      linhasCandidatos += `${candidatos[key].nome} (${key}): ${contagemVotos[key]} voto(s)\n`;
+      linhasCandidatos += `\${candidatos[key].nome} (\${key}): \${contagemVotos[key]} voto(s)\n`;
     }
     total += contagemVotos[key];
   }
@@ -278,19 +278,18 @@ function gerarBoletim() {
 ====================================
 SIMULADOR COPA DO MUNDO 2026
 
-Data: ${new Date().toLocaleDateString()}
-Hora: ${new Date().toLocaleTimeString()}
-
-PROTOCOLO EMISSÃO: ${gerarProtocolo()}
+Data: \${new Date().toLocaleDateString()}
+Hora: \---\---\---\---
+PROTOCOLO EMISSÃO: \${gerarProtocolo()}
 ====================================
 VOTOS NOMINAIS COMPUTADOS:
 
-${linhasCandidatos || "Nenhum país recebeu votos.\n"}
+\${linhasCandidatos || "Nenhum país recebeu votos.\n"}
 ------------------------------------
-VOTOS EM BRANCO: ${contagemVotos.BRANCO}
-VOTOS NULOS: ${contagemVotos.NULO}
+VOTOS EM BRANCO: \${contagemVotos.BRANCO}
+VOTOS NULOS: \${contagemVotos.NULO}
 ====================================
-TOTAL GERAL DE VOTOS DA URNA: ${total}
+TOTAL GERAL DE VOTOS DA URNA: \${total}
 ====================================
 `;
   abrirRelatorio(texto);
