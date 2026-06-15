@@ -1,7 +1,118 @@
-/* Container da foto (Moldura) */
+/* RESET DE PADRÕES */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* PLANO DE FUNDO VERDE DA COPA */
+body {
+  background: linear-gradient(135deg, #114b27, #0d2c16);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+/* CONTAINER PRINCIPAL DA URNA */
+.urna-container {
+  background: #c8c8c8;
+  padding: 25px;
+  border-radius: 20px;
+  display: flex;
+  gap: 25px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* TELA DA URNA */
+.tela {
+  width: 550px;
+  height: 420px; /* Altura fixa para manter estabilidade do layout */
+  background: #fff;
+  border: 10px solid #888;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.topo {
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.topo h1 {
+  font-size: 24px;
+  color: #222;
+  letter-spacing: 1px;
+}
+
+.conteudo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  margin-top: 15px;
+}
+
+/* LADO ESQUERDO (DADOS DO CANDIDATO) */
+.esquerda {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.cargo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #111;
+}
+
+.numeros {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.numero {
+  width: 60px;
+  height: 70px;
+  border: 2px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 38px;
+  font-weight: bold;
+}
+
+/* Efeito de piscar nos quadradinhos numéricos vazios */
+.numero:empty {
+  animation: pisca 1s infinite;
+}
+
+@keyframes pisca {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+.info p {
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* LADO DIREITO (MOLDURA DA BANDEIRA RETANGULAR) */
 .direita {
-  width: 140px; /* Largura ideal para a bandeira na tela */
-  height: 100px; /* Altura ideal */
+  width: 140px; /* Largura ideal para bandeiras proporção padrão */
+  height: 100px; /* Altura ideal retangular */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,10 +122,170 @@
   box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
 }
 
-/* Força a imagem a preencher a moldura mantendo a proporção */
+/* CORREÇÃO CRÍTICA: Ajusta a imagem JPG para preencher a moldura sem distorcer ou ficar gigante */
 .direita img {
   width: 100%;
   height: 100%;
-  object-fit: fill; /* Força a bandeira a se ajustar perfeitamente ao retângulo */
-  display: none; /* Controlado pelo JS */
+  object-fit: fill; /* Força o preenchimento retangular idêntico ao modelo original */
+  display: none; /* Mantém oculto até o JS disparar a renderização */
+}
+
+.mensagem {
+  margin-top: 10px;
+  font-size: 22px;
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+.rodape {
+  border-top: 2px solid #333;
+  padding-top: 8px;
+  font-size: 12px;
+  color: #444;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* BLOCO DO TECLADO FÍSICO DA URNA */
+.teclado {
+  background: #2d2d2d;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.teclas-numericas {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  gap: 12px;
+}
+
+.teclas-numericas button {
+  height: 60px;
+  font-size: 28px;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #000;
+  transition: all 0.05s ease;
+}
+
+.teclas-numericas button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #000;
+}
+
+.zero {
+  grid-column: 2;
+}
+
+/* BOTÕES DE CONTROLE INFERIOR (BRANCO, CORRIGE, CONFIRMA) */
+.funcoes {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.funcoes button {
+  flex: 1;
+  height: 55px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+  transition: all 0.05s ease;
+  text-transform: uppercase;
+}
+
+.funcoes button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.branco {
+  background: #ffffff;
+  color: #000;
+}
+
+.corrige {
+  background: #f05a28;
+  color: #000;
+}
+
+.confirma {
+  background: #00a651;
+  color: #fff;
+  font-size: 15px;
+}
+
+/* RENDERIZAÇÃO DA TELA DE "FIM" */
+.fim {
+  font-size: 75px;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* BOTÕES AUXILIARES DE EMISSÃO DE DOCUMENTOS */
+.relatorios {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+}
+
+.relatorios button {
+  padding: 12px 20px;
+  background: #facc15;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.1s, background-color 0.2s;
+}
+
+.relatorios button:hover {
+  transform: scale(1.03);
+  background: #eab308;
+}
+
+/* ADAPTAÇÃO RESPONSIVA PARA DISPOSITIVOS MÓVEIS */
+@media (max-width: 900px) {
+  .urna-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tela {
+    width: 100%;
+    height: auto;
+  }
+  
+  .conteudo {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .esquerda, .direita {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .numeros {
+    justify-content: center;
+  }
 }
