@@ -1,291 +1,317 @@
-/* RESET DE PADRÕES */
+/* ==========================================
+   CONFIGURAÇÕES GERAIS E RESETS
+   ========================================== */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-/* PLANO DE FUNDO VERDE DA COPA */
 body {
-  background: linear-gradient(135deg, #114b27, #0d2c16);
-  min-height: 100vh;
+  background-color: #123424; /* Verde escuro de fundo da urna */
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
   padding: 20px;
 }
 
-/* CONTAINER PRINCIPAL DA URNA */
-.urna-container {
-  background: #c8c8c8;
-  padding: 25px;
-  border-radius: 20px;
+/* ==========================================
+   ESTRUTURA PRINCIPAL DA URNA
+   ========================================== */
+.urna {
+  background-color: #dbdbdb; /* Cinza claro da carcaça */
+  padding: 30px;
+  border-radius: 15px;
   display: flex;
   gap: 25px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5), 
+              inset 0 2px 5px rgba(255,255,255,0.5);
+  border: 4px solid #b5b5b5;
+  max-width: 950px;
+  width: 100%;
 }
 
-/* TELA DA URNA */
+/* ==========================================
+   TELA DA URNA (MONITOR)
+   ========================================== */
 .tela {
-  width: 550px;
-  height: 420px; /* Altura fixa para manter estabilidade do layout */
-  background: #fff;
-  border: 10px solid #888;
+  background-color: #fff;
+  border: 10px solid #777;
+  border-image: linear-gradient(to bottom, #555, #888) 10;
+  flex: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+  min-height: 380px;
 }
 
-.topo {
+/* Cabeçalho fixo interno da tela */
+.titulo-tela {
   text-align: center;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 8px;
-}
-
-.topo h1 {
-  font-size: 24px;
-  color: #222;
+  font-size: 20px;
+  font-weight: bold;
   letter-spacing: 1px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
 }
 
+/* Divisão do conteúdo interno (Esquerda e Direita) */
 .conteudo {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   flex: 1;
-  margin-top: 15px;
+  justify-content: space-between;
+  align-items: stretch;
+  position: relative;
 }
 
-/* LADO ESQUERDO (DADOS DO CANDIDATO) */
+/* Lado Esquerdo da Tela (Textos e Números) */
 .esquerda {
-  width: 60%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  flex: 1;
+  padding-right: 15px;
 }
 
 .cargo {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
   margin-bottom: 15px;
-  color: #111;
 }
 
+/* Quadrados onde aparecem os números digitados */
 .numeros {
   display: flex;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .numero {
-  width: 60px;
-  height: 70px;
+  width: 45px;
+  height: 55px;
   border: 2px solid #000;
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 38px;
+  justify-content: center;
+  font-size: 32px;
   font-weight: bold;
+  background-color: #fff;
 }
 
-/* Efeito de piscar nos quadradinhos numéricos vazios */
-.numero:empty {
-  animation: pisca 1s infinite;
-}
-
-@keyframes pisca {
-  0% { opacity: 0.2; }
-  50% { opacity: 1; }
-  100% { opacity: 0.2; }
+/* Informações do candidato (País, Continente, Títulos) */
+.info {
+  margin-top: 5px;
 }
 
 .info p {
+  font-size: 15px;
   margin-bottom: 8px;
-  font-size: 16px;
   color: #333;
 }
 
-/* LADO DIREITO (MOLDURA DA BANDEIRA RETANGULAR) */
-.direita {
-  width: 140px; /* Largura ideal para bandeiras proporção padrão */
-  height: 100px; /* Altura ideal retangular */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #444;
-  background-color: #fafafa;
-  overflow: hidden;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+.info span {
+  font-weight: bold;
+  color: #000;
 }
 
-/* CORREÇÃO CRÍTICA: Ajusta a imagem JPG para preencher a moldura sem distorcer ou ficar gigante */
+/* Mensagens de alertas como VOTO NULO */
+.mensagem {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff0000;
+  margin-top: 10px;
+  animation: piscar 1s infinite alternate;
+}
+
+@keyframes piscar {
+  from { opacity: 1; }
+  to { opacity: 0.3; }
+}
+
+/* Rodapé de instruções da tela */
+.instrucoes {
+  border-top: 2px solid #000;
+  padding-top: 8px;
+  font-size: 11px;
+  color: #444;
+  line-height: 1.4;
+}
+
+/* Lado Direito da Tela (Moldura e Imagem da Bandeira) */
+.direita {
+  width: 150px;
+  height: 110px;
+  display: flex;
+  
+  /* AJUSTE COPA: Sobe a moldura para o topo da tela igual a urna real */
+  margin-top: -30px; 
+  align-items: flex-start;
+  justify-content: center;
+  
+  border: 1px dashed #555;
+  background-color: #faf8f5;
+  overflow: hidden;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+  transition: all 0.2s ease-in-out;
+}
+
 .direita img {
   width: 100%;
   height: 100%;
-  object-fit: fill; /* Força o preenchimento retangular idêntico ao modelo original */
-  display: none; /* Mantém oculto até o JS disparar a renderização */
+  object-fit: fill; /* Preenche perfeitamente o retângulo */
+  display: none; /* Controlado pelo Javascript */
 }
 
-.mensagem {
-  margin-top: 10px;
-  font-size: 22px;
-  color: #d32f2f;
-  font-weight: bold;
-}
-
-.rodape {
-  border-top: 2px solid #333;
-  padding-top: 8px;
-  font-size: 12px;
-  color: #444;
-  line-height: 1.4;
-  text-transform: uppercase;
-}
-
-/* BLOCO DO TECLADO FÍSICO DA URNA */
-.teclado {
-  background: #2d2d2d;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.teclas-numericas {
-  display: grid;
-  grid-template-columns: repeat(3, 80px);
-  gap: 12px;
-}
-
-.teclas-numericas button {
-  height: 60px;
-  font-size: 28px;
-  background: #111;
-  color: white;
+/* REGRA DE INVISIBILIDADE: Esconde a moldura quando o display da img for 'none' */
+.direita:has(img[style*="display: none"]),
+.direita:has(img:not([style*="display: block"])) {
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 4px 0 #000;
-  transition: all 0.05s ease;
+  background-color: transparent;
+  box-shadow: none;
 }
 
-.teclas-numericas button:active {
-  transform: translateY(3px);
-  box-shadow: 0 1px 0 #000;
-}
-
-.zero {
-  grid-column: 2;
-}
-
-/* BOTÕES DE CONTROLE INFERIOR (BRANCO, CORRIGE, CONFIRMA) */
-.funcoes {
-  display: flex;
-  gap: 10px;
-  margin-top: 25px;
-}
-
-.funcoes button {
-  flex: 1;
-  height: 55px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 13px;
-  cursor: pointer;
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
-  transition: all 0.05s ease;
-  text-transform: uppercase;
-}
-
-.funcoes button:active {
-  transform: translateY(3px);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
-}
-
-.branco {
-  background: #ffffff;
-  color: #000;
-}
-
-.corrige {
-  background: #f05a28;
-  color: #000;
-}
-
-.confirma {
-  background: #00a651;
-  color: #fff;
-  font-size: 15px;
-}
-
-/* RENDERIZAÇÃO DA TELA DE "FIM" */
+/* Tela de FIM da votação */
 .fim {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
   font-size: 75px;
   font-weight: bold;
-  width: 100%;
-  text-align: center;
   color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
+  letter-spacing: 4px;
+  height: 100%;
 }
 
-/* BOTÕES AUXILIARES DE EMISSÃO DE DOCUMENTOS */
-.relatorios {
-  margin-top: 25px;
+
+/* ==========================================
+   TECLADO FÍSICO DA URNA
+   ========================================== */
+.teclado {
+  background-color: #212121; /* Preto asfalto do teclado */
+  padding: 25px 15px;
   display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  width: 300px;
+}
+
+/* Alinhamento das linhas de botões numéricos (1 a 9) */
+.teclado-linha {
+  display: flex;
+  justify-content: center;
   gap: 15px;
 }
 
-.relatorios button {
-  padding: 12px 20px;
-  background: #facc15;
-  color: #111;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+/* Estilização padrão de todas as teclas da urna */
+.teclado-botao {
+  background: linear-gradient(to bottom, #333, #1a1a1a);
+  color: #fff;
+  font-size: 24px;
   font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  transition: transform 0.1s, background-color 0.2s;
+  width: 65px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px #000, 0 5px 5px rgba(0,0,0,0.5);
+  user-select: none;
+  transition: background 0.1s;
 }
 
-.relatorios button:hover {
-  transform: scale(1.03);
-  background: #eab308;
+.teclado-botao:active {
+  box-shadow: 0 1px #000;
+  transform: translateY(3px);
 }
 
-/* ADAPTAÇÃO RESPONSIVA PARA DISPOSITIVOS MÓVEIS */
-@media (max-width: 900px) {
-  .urna-container {
-    flex-direction: column;
-    align-items: center;
-  }
+/* Configurações específicas da linha de comandos (Branco, Corrige, Confirma) */
+.botoes-comando {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 0 5px;
+}
 
-  .tela {
-    width: 100%;
-    height: auto;
-  }
-  
-  .conteudo {
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .esquerda, .direita {
-    width: 100%;
-    align-items: center;
-    text-align: center;
-  }
+.btn-comando {
+  flex: 1;
+  height: 50px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  transition: transform 0.1s;
+}
 
-  .numeros {
-    justify-content: center;
-  }
+.btn-comando:active {
+  transform: scale(0.96);
+}
+
+/* Cores oficiais dos botões de comando */
+.btn-branco {
+  background-color: #ffffff;
+  box-shadow: 0 3px #b5b5b5;
+}
+
+.btn-corrige {
+  background-color: #e05c2b; /* Laranja oficial */
+  box-shadow: 0 3px #963511;
+}
+
+.btn-confirma {
+  background-color: #009c52; /* Verde oficial */
+  box-shadow: 0 3px #00592f;
+  height: 58px; /* O botão confirma é levemente mais alto */
+  margin-top: -8px; /* Ajusta o alinhamento devido à altura */
+  font-size: 13px;
+}
+
+
+/* ==========================================
+   PAINEL DE BOTÕES EXTERNOS (IMPRESSÃO)
+   ========================================== */
+.paineis-impressao {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.btn-impressao {
+  background-color: #f1c40f; /* Amarelo ouro */
+  color: #000;
+  border: none;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px #b7950b;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-impressao:hover {
+  background-color: #f39c12;
+}
+
+.btn-impressao:active {
+  box-shadow: 0 1px #b7950b;
+  transform: translateY(3px);
 }
