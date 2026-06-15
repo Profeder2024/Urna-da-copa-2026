@@ -1,4 +1,3 @@
-// Banco de dados oficial das 48 seleções da Copa 2026
 const candidatos = {
   "01": { nome: "Canadá", continente: "América do Norte", titulos: "0" },
   "02": { nome: "Estados Unidos", continente: "América do Norte", titulos: "0" },
@@ -51,39 +50,27 @@ const candidatos = {
 };
 
 let numeroDigitado = "";
+const contagemVotos = { BRANCO: 0, NULO: 0 };
 
-const contagemVotos = {
-  BRANCO: 0,
-  NULO: 0
-};
-
-// Inicializa a contagem zerada para todos os países
 for (let key in candidatos) {
   contagemVotos[key] = 0;
 }
 
-// Configuração do arquivo de som local armazenado na sua pasta
-const sons = {
-  somConfirma: "confirma-urna.mp3"
-};
+const sons = { somConfirma: "confirma-urna.mp3" };
 
-// Reprodutor dinâmico inteligente (executa apenas no Confirma)
 function tocarSom(tipo) {
   try {
     const audioUrl = sons[tipo];
     if (audioUrl) {
       const somDinamico = new Audio(audioUrl);
       somDinamico.currentTime = 0;
-      somDinamico.play().catch(err => {
-        console.log("O navegador bloqueou a execução de áudio. Interaja com a página antes.");
-      });
+      somDinamico.play().catch(err => console.log("Áudio bloqueado preliminarmente."));
     }
   } catch (erro) {
-    console.log("Erro ao processar o arquivo de áudio:", erro);
+    console.log("Erro no áudio:", erro);
   }
 }
 
-// Teclas Numéricas (Silenciosas)
 function clicou(n) {
   if (numeroDigitado.length < 2) {
     numeroDigitado += n.toString();
@@ -91,27 +78,24 @@ function clicou(n) {
   }
 }
 
-// Atualização e renderização do monitor da urna eletrônica
 function atualizarTela() {
   document.getElementById("n1").innerText = numeroDigitado[0] || "";
   document.getElementById("n2").innerText = numeroDigitado[1] || "";
 
   const candidato = candidatos[numeroDigitado];
   const foto = document.getElementById("foto");
-  const containerFoto = document.querySelector(".direita"); // Elemento da moldura
+  const containerFoto = document.querySelector(".direita");
 
   if (candidato) {
     document.getElementById("nome").innerText = candidato.nome;
     document.getElementById("time").innerText = candidato.continente;
     document.getElementById("posicao").innerText = candidato.titulos;
 
-    // Busca o arquivo de imagem JPG correspondente na pasta local (Ex: 13.jpg)
     foto.src = `${numeroDigitado}.jpg`;
     foto.style.display = "block";
     
-    // ATIVA A MOLDURA: Adiciona a classe que torna as bordas visíveis no CSS
+    // Mostra a moldura lá em cima
     if (containerFoto) containerFoto.classList.add("visivel");
-    
     document.getElementById("mensagem").innerText = "";
   } else {
     document.getElementById("nome").innerText = "";
@@ -119,7 +103,7 @@ function atualizarTela() {
     document.getElementById("posicao").innerText = "";
     foto.style.display = "none";
     
-    // DESATIVA A MOLDURA: Remove a classe fazendo a borda desaparecer
+    // Esconde a moldura
     if (containerFoto) containerFoto.classList.remove("visivel");
 
     if (numeroDigitado.length === 2) {
@@ -128,9 +112,8 @@ function atualizarTela() {
   }
 }
 
-// Botão de voto em Branco (Silencioso)
 function branco() {
-  numeroDigitated = "";
+  numeroDigitado = "";
   document.getElementById("n1").innerText = "";
   document.getElementById("n2").innerText = "";
   document.getElementById("nome").innerText = "VOTO EM BRANCO";
@@ -138,14 +121,11 @@ function branco() {
   document.getElementById("posicao").innerText = "";
   document.getElementById("foto").style.display = "none";
   
-  // Garante que a moldura suma no voto em branco
   const containerFoto = document.querySelector(".direita");
   if (containerFoto) containerFoto.classList.remove("visivel");
-  
   document.getElementById("mensagem").innerText = "";
 }
 
-// Botão de corrigir a tela (Silencioso)
 function corrige() {
   numeroDigitado = "";
   document.getElementById("n1").innerText = "";
@@ -156,19 +136,16 @@ function corrige() {
   document.getElementById("mensagem").innerText = "";
   document.getElementById("foto").style.display = "none";
   
-  // Garante que a moldura suma ao corrigir
   const containerFoto = document.querySelector(".direita");
   if (containerFoto) containerFoto.classList.remove("visivel");
 }
 
-// Botão de confirmação (Gatilha o arquivo de áudio local mp3)
 function confirma() {
   if (numeroDigitado.length === 1) {
     alert("Por favor, preencha os 2 dígitos antes de confirmar.");
     return;
   }
 
-  // Aciona o áudio local "confirma-urna.mp3"
   tocarSom("somConfirma"); 
 
   if (numeroDigitado === "") {
@@ -179,18 +156,13 @@ function confirma() {
     contagemVotos.NULO++;
   }
 
-  // Renderiza a tela de FIM da votação
-  document.getElementById("conteudo").innerHTML = `
-    <div class="fim">FIM</div>
-  `;
+  document.getElementById("conteudo").innerHTML = `<div class="fim">FIM</div>`;
 
-  // Aguarda 2.5 segundos e limpa o painel para o próximo eleitor
   setTimeout(() => {
     restaurarTela();
   }, 2500);
 }
 
-// Reconstrói a interface da tela original após o término da votação
 function restaurarTela() {
   numeroDigitado = "";
   document.getElementById("conteudo").innerHTML = `
@@ -211,118 +183,44 @@ function restaurarTela() {
       <img id="foto" src="" alt="Bandeira da Seleção">
     </div>
   `;
-  
-  // Força a nova moldura injetada a nascer oculta/sem a classe visivel
   const containerFoto = document.querySelector(".direita");
   if (containerFoto) containerFoto.classList.remove("visivel");
 }
 
-// Cria códigos numéricos aleatórios para os relatórios de impressão
-function gerarProtocolo() {
-  return Math.floor(Math.random() * 999999999);
-}
+function gerarProtocolo() { return Math.floor(Math.random() * 999999999); }
 
-// Processador de abertura dos relatórios impressos via Pop-up integrado
 function abrirRelatorio(texto) {
   const janela = window.open("", "", "width=500,height=700");
   if (!janela) {
-    alert("Por favor, autorize a exibição de Pop-ups neste navegador para emitir o documento!");
+    alert("Autorize a exibição de Pop-ups!");
     return;
   }
   janela.document.write(`
     <html>
-      <head>
-        <title>Emissão de Relatório de Urna</title>
-        <style>
-          body { font-family: monospace; padding: 20px; background: #fff; color: #000; }
-          button { padding: 10px 20px; margin-top: 20px; cursor: pointer; font-size: 16px; font-weight: bold; }
-          pre { font-size: 15px; white-space: pre-wrap; }
-        </style>
-      </head>
-      <body>
-        <pre>${texto}</pre>
-        <button onclick="window.print()">IMPRIMIR DOCUMENTO</button>
-      </body>
+      <head><title>Relatório</title><style>body{font-family:monospace;padding:20px;}button{padding:10px;margin-top:20px;}</style></head>
+      <body><pre>${texto}</pre><button onclick="window.print()">IMPRIMIR</button></body>
     </html>
   `);
 }
 
-// Emissão do relatório de Zerésima (Antes do início do pleito)
 function gerarZeresima() {
-  let linhasCandidatos = "";
-  for (let key in candidatos) {
-    linhasCandidatos += `${candidatos[key].nome} (${key}): 0 votos\n`;
-  }
-
-  let texto = `
-====================================
-          ZERÉSIMA DA URNA
-====================================
-SIMULADOR COPA DO MUNDO 2026
-
-Data: ${new Date().toLocaleDateString()}
-Hora: ${new Date().toLocaleTimeString()}
-
-PROTOCOLO EMISSÃO: ${gerarProtocolo()}
-====================================
-
-${linhasCandidatos}
-Brancos: 0
-Nulos: 0
-====================================
-COMPROVADO: URNA SEM VOTOS COMPUTADOS
-====================================
-`;
-  abrirRelatorio(texto);
+  let linhas = "";
+  for (let key in candidatos) { linhas += `${candidatos[key].nome}: 0\n`; }
+  abrirRelatorio(`=== ZERÉSIMA ===\n\n${linhas}`);
 }
 
-// Emissão do Boletim de Urna (Apuração dos resultados salvos)
 function gerarBoletim() {
-  let total = 0;
-  let linhasCandidatos = "";
-
+  let linhas = "", total = 0;
   for (let key in candidatos) {
-    if (contagemVotos[key] > 0) {
-      linhasCandidatos += `${candidatos[key].nome} (${key}): ${contagemVotos[key]} voto(s)\n`;
-    }
+    if (contagemVotos[key] > 0) { linhas += `${candidatos[key].nome}: ${contagemVotos[key]}\n`; }
     total += contagemVotos[key];
   }
-  
   total += contagemVotos.BRANCO + contagemVotos.NULO;
-
-  let texto = `
-====================================
-          BOLETIM DE URNA
-====================================
-SIMULADOR COPA DO MUNDO 2026
-
-Data: ${new Date().toLocaleDateString()}
-Hora: ${new Date().toLocaleTimeString()}
-
-PROTOCOLO EMISSÃO: ${gerarProtocolo()}
-====================================
-VOTOS NOMINAIS COMPUTADOS:
-
-${linhasCandidatos || "Nenhum país recebeu votos.\n"}
-------------------------------------
-VOTOS EM BRANCO: ${contagemVotos.BRANCO}
-VOTOS NULOS: ${contagemVotos.NULO}
-====================================
-TOTAL GERAL DE VOTOS DA URNA: ${total}
-====================================
-`;
-  abrirRelatorio(texto);
+  abrirRelatorio(`=== BOLETIM ===\n\n${linhas}\nBrancos: ${contagemVotos.BRANCO}\nNulos: ${contagemVotos.NULO}\nTotal: ${total}`);
 }
 
-// Sincronização e escuta ativa do teclado físico do computador
 window.addEventListener("keydown", (e) => {
-  if (!isNaN(e.key) && e.key !== " ") {
-    clicou(e.key);
-  }
-  if (e.key === "Enter") {
-    confirma();
-  }
-  if (e.key === "Backspace") {
-    corrige();
-  }
+  if (!isNaN(e.key) && e.key !== " ") clicou(e.key);
+  if (e.key === "Enter") confirma();
+  if (e.key === "Backspace") corrige();
 });
