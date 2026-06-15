@@ -144,39 +144,36 @@ body {
 }
 
 /* ==========================================
-   LADO DIREITO (MOLDURA DA BANDEIRA ATUALIZADA)
+   LADO DIREITO (MOLDURA DA BANDEIRA CORRIGIDA)
    ========================================== */
 .direita {
   width: 150px;
   height: 110px;
+  display: flex;
   
-  /* Mantém a foto no topo igual à urna real */
+  /* Sobe o elemento para alinhar perfeitamente ao topo (Igual Urna Real) */
+  align-self: flex-start; 
   margin-top: 0px; 
-  align-self: flex-start;
   
-  /* Por padrão, a moldura começa COMPLETAMENTE INVISÍVEL */
-  border: none;
+  /* ESTADO INICIAL: Totalmente invisível e sem linhas */
+  border: 1px solid transparent;
   background-color: transparent;
   box-shadow: none;
   overflow: hidden;
+  transition: all 0.15s ease-in-out;
+}
+
+/* ESTADO ATIVO: Ativado via Javascript apenas quando há foto */
+.direita.visivel {
+  border: 1px dashed #555;
+  background-color: #faf8f5;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
 }
 
 .direita img {
   width: 100%;
   height: 100%;
-  object-fit: fill;
-  display: none;
-}
-
-/* REGRA DE OURO INFALÍVEL: Quando a imagem ganha um "src" preenchido pelo JS, a moldura ganha vida! */
-.direita:has(img[src^="0"]),
-.direita:has(img[src^="1"]),
-.direita:has(img[src^="2"]),
-.direita:has(img[src^="3"]),
-.direita:has(img[src^="4"]) {
-  border: 1px dashed #555;
-  background-color: #faf8f5;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+  object-fit: fill; /* Garante o preenchimento proporcional da bandeira */
 }
 
 /* Tela de FIM da votação */
