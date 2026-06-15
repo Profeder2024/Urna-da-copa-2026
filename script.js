@@ -64,7 +64,7 @@ for (let key in candidatos) {
 
 // CORREÇÃO DOS LINKS: Sons totalmente separados e distintos
 const sons = {
-  somTecla: "https://audio.code.org/click.mp3", // Som curto de clique de máquina
+ //  somTecla: "https://audio.code.org/click.mp3", // Som curto de clique de máquina
   somConfirma: "https://assets.mixkit.co/active_storage/sfx/2568/2568-84.wav" // Som longo de confirmação (Pilili)
 };
 
@@ -89,7 +89,7 @@ function clicou(n) {
   if (numeroDigitado.length < 2) {
     numeroDigitado += n.toString();
     atualizarTela();
-    tocarSom("somTecla"); // SOM DE CLIQUE CURTO
+    // tocarSom("somTecla"); // SOM DE CLIQUE CURTO
   }
 }
 
@@ -131,7 +131,7 @@ function branco() {
   document.getElementById("posicao").innerText = "";
   document.getElementById("foto").style.display = "none";
   document.getElementById("mensagem").innerText = "";
-  tocarSom("somTecla"); // SOM DE CLIQUE CURTO
+  // tocarSom("somTecla"); // SOM DE CLIQUE CURTO
 }
 
 // Tecla Corrige
@@ -144,7 +144,7 @@ function corrige() {
   document.getElementById("posicao").innerText = "";
   document.getElementById("mensagem").innerText = "";
   document.getElementById("foto").style.display = "none";
-  tocarSom("somTecla"); // SOM DE CLIQUE CURTO
+  // tocarSom("somTecla"); // SOM DE CLIQUE CURTO
 }
 
 // Tecla Confirma
