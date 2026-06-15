@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: #123424; /* Verde floresta clássico ao fundo */
+  background-color: #123424; /* Verde escuro de fundo da urna */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,7 +22,7 @@ body {
    ESTRUTURA PRINCIPAL DA URNA
    ========================================== */
 .urna {
-  background-color: #dbdbdb; /* Tom cinza corporativo da carcaça */
+  background-color: #dbdbdb; /* Cinza claro da carcaça */
   padding: 30px;
   border-radius: 15px;
   display: flex;
@@ -35,7 +35,7 @@ body {
 }
 
 /* ==========================================
-   TELA INTERNA (MONITOR)
+   TELA DA URNA (MONITOR)
    ========================================== */
 .tela {
   background-color: #fff;
@@ -50,6 +50,7 @@ body {
   min-height: 380px;
 }
 
+/* Cabeçalho fixo interno da tela */
 .titulo-tela {
   text-align: center;
   font-size: 20px;
@@ -57,35 +58,34 @@ body {
   letter-spacing: 1px;
   border-bottom: 2px solid #ccc;
   padding-bottom: 8px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
-/* Distribuição espacial interna da tela */
+/* Divisão do conteúdo interno (Esquerda e Direita) */
 .conteudo {
   display: flex;
   flex: 1;
   justify-content: space-between;
-  align-items: flex-start; /* Alinhamento firme ao topo */
+  align-items: stretch;
   position: relative;
 }
 
-/* Bloco Esquerdo: Textos, Labels e Inputs Numéricos */
+/* Lado Esquerdo da Tela (Textos e Números) */
 .esquerda {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   flex: 1;
-  padding-right: 160px; /* Margem de segurança para os textos não tocarem no retângulo */
+  padding-right: 15px;
 }
 
 .cargo {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: bold;
   margin-bottom: 15px;
-  letter-spacing: 0.5px;
 }
 
-/* Quadrados numéricos de entrada de voto */
+/* Quadrados onde aparecem os números digitados */
 .numeros {
   display: flex;
   gap: 10px;
@@ -104,9 +104,13 @@ body {
   background-color: #fff;
 }
 
-/* Labels e Linhas de Dados do Candidato */
+/* Informações do candidato (País, Continente, Títulos) */
+.info {
+  margin-top: 5px;
+}
+
 .info p {
-  font-size: 16px;
+  font-size: 15px;
   margin-bottom: 8px;
   color: #333;
 }
@@ -116,50 +120,63 @@ body {
   color: #000;
 }
 
-/* Feedback visual de alertas (VOTO NULO) */
+/* Mensagens de alertas como VOTO NULO */
 .mensagem {
   font-size: 24px;
   font-weight: bold;
   color: #ff0000;
-  margin-top: 15px;
+  margin-top: 10px;
+  animation: piscar 1s infinite alternate;
 }
 
-/* Instruções fixas inferiores da tela */
+@keyframes piscar {
+  from { opacity: 1; }
+  to { opacity: 0.3; }
+}
+
+/* Rodapé de instruções da tela */
 .instrucoes {
   border-top: 2px solid #000;
   padding-top: 8px;
-  font-size: 12px;
+  font-size: 11px;
   color: #444;
   line-height: 1.4;
-  margin-top: 10px;
 }
 
 /* ==========================================
-   MOLDURA DA BANDEIRA (MÁXIMA FIDELIDADE)
+   LADO DIREITO (MOLDURA DA BANDEIRA CORRIGIDA)
    ========================================== */
 .direita {
-  width: 145px;
-  height: 115px;
-  background-color: #fff; /* Fundo sempre branco limpo aguardando a bandeira */
-  border: 1px solid #7f7f7f; /* Borda cinza/escura sólida e bem definida */
+  width: 150px;
+  height: 110px;
   display: flex;
-  align-items: center;
-  justify-content: center;
   
-  /* Posicionamento fixado no lado superior direito da área de conteúdo */
-  position: absolute;
-  top: 10px;
-  right: 5px;
-  box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  /* Sobe o elemento para alinhar perfeitamente ao topo (Igual Urna Real) */
+  align-self: flex-start; 
+  margin-top: 0px; 
+  
+  /* ESTADO INICIAL: Totalmente invisível e sem linhas */
+  border: 1px solid transparent;
+  background-color: transparent;
+  box-shadow: none;
+  overflow: hidden;
+  transition: all 0.15s ease-in-out;
+}
+
+/* ESTADO ATIVO: Ativado via Javascript apenas quando há foto */
+.direita.visivel {
+  border: 1px dashed #555;
+  background-color: #faf8f5;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
 }
 
 .direita img {
   width: 100%;
   height: 100%;
-  object-fit: fill; /* Garante que a bandeira estique e ocupe todo o espaço interno */
+  object-fit: fill; /* Garante o preenchimento proporcional da bandeira */
 }
 
-/* Renderização da mensagem de encerramento */
+/* Tela de FIM da votação */
 .fim {
   display: flex;
   flex: 1;
@@ -173,10 +190,10 @@ body {
 }
 
 /* ==========================================
-   TECLADO NUMÉRICO E COMANDOS
+   TECLADO FÍSICO DA URNA
    ========================================== */
 .teclado {
-  background-color: #212121; /* Cor escura do painel de teclas */
+  background-color: #212121;
   padding: 25px 15px;
   display: flex;
   flex-direction: column;
@@ -207,6 +224,7 @@ body {
   border: none;
   box-shadow: 0 4px #000, 0 5px 5px rgba(0,0,0,0.5);
   user-select: none;
+  transition: background 0.1s;
 }
 
 .teclado-botao:active {
@@ -214,7 +232,6 @@ body {
   transform: translateY(3px);
 }
 
-/* Alinhamento dos botões coloridos de comando */
 .botoes-comando {
   display: flex;
   justify-content: space-between;
@@ -226,7 +243,7 @@ body {
 .btn-comando {
   flex: 1;
   height: 50px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: bold;
   color: #000;
   text-transform: uppercase;
@@ -237,6 +254,7 @@ body {
   align-items: center;
   justify-content: center;
   user-select: none;
+  transition: transform 0.1s;
 }
 
 .btn-comando:active {
@@ -249,20 +267,20 @@ body {
 }
 
 .btn-corrige {
-  background-color: #e05c2b; /* Laranja operacional */
+  background-color: #e05c2b;
   box-shadow: 0 3px #963511;
 }
 
 .btn-confirma {
-  background-color: #009c52; /* Verde oficial */
+  background-color: #009c52;
   box-shadow: 0 3px #00592f;
-  height: 58px; /* Destaque físico de altura */
-  margin-top: -8px; /* Compensação de alinhamento */
-  font-size: 12px;
+  height: 58px;
+  margin-top: -8px;
+  font-size: 13px;
 }
 
 /* ==========================================
-   SISTEMA DE IMPRESSÃO (BOTÕES EXTRA)
+   PAINEL DE BOTÕES EXTERNOS (IMPRESSÃO)
    ========================================== */
 .paineis-impressao {
   display: flex;
@@ -280,9 +298,14 @@ body {
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0 4px #b7950b;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.1s;
 }
 
 .btn-impressao:hover {
   background-color: #f39c12;
+}
+
+.btn-impressao:active {
+  box-shadow: 0 1px #b7950b;
+  transform: translateY(3px);
 }
