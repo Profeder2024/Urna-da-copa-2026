@@ -57,20 +57,43 @@ const contagemVotos = {
   NULO: 0
 };
 
-// Inicializa o mapa de contagem zerado
+// Inicializa contagem zerada
 for (let key in candidatos) {
   contagemVotos[key] = 0;
 }
 
-// Inserção numérica (SEM SOM NENHUM)
+// CORREÇÃO DOS LINKS: Sons totalmente separados e distintos
+const sons = {
+  somTecla: "https://audio.code.org/click.mp3", // Som curto de clique de máquina
+  somConfirma: "https://assets.mixkit.co/active_storage/sfx/2568/2568-84.wav" // Som longo de confirmação (Pilili)
+};
+
+// Reprodutor dinâmico inteligente
+function tocarSom(tipo) {
+  try {
+    const audioUrl = sons[tipo];
+    if (audioUrl) {
+      const somDinamico = new Audio(audioUrl);
+      somDinamico.currentTime = 0;
+      somDinamico.play().catch(err => {
+        console.log("Aguardando clique na tela para liberar o áudio.");
+      });
+    }
+  } catch (erro) {
+    console.log("Erro no áudio:", erro);
+  }
+}
+
+// Teclas Numéricas
 function clicou(n) {
   if (numeroDigitado.length < 2) {
     numeroDigitado += n.toString();
     atualizarTela();
+    tocarSom("somTecla"); // SOM DE CLIQUE CURTO
   }
 }
 
-// Atualização gráfica do visor (SEM SOM NENHUM)
+// Atualizar Monitor
 function atualizarTela() {
   document.getElementById("n1").innerText = numeroDigitado[0] || "";
   document.getElementById("n2").innerText = numeroDigitado[1] || "";
@@ -83,7 +106,7 @@ function atualizarTela() {
     document.getElementById("time").innerText = candidato.continente;
     document.getElementById("posicao").innerText = candidato.titulos;
 
-    foto.src = `./${numeroDigitado}.jpg`;
+    foto.src = `${numeroDigitado}.jpg`;
     foto.style.display = "block";
     document.getElementById("mensagem").innerText = "";
   } else {
@@ -98,6 +121,7 @@ function atualizarTela() {
   }
 }
 
+// Tecla Branco
 function branco() {
   numeroDigitado = "";
   document.getElementById("n1").innerText = "";
@@ -107,8 +131,10 @@ function branco() {
   document.getElementById("posicao").innerText = "";
   document.getElementById("foto").style.display = "none";
   document.getElementById("mensagem").innerText = "";
+  tocarSom("somTecla"); // SOM DE CLIQUE CURTO
 }
 
+// Tecla Corrige
 function corrige() {
   numeroDigitado = "";
   document.getElementById("n1").innerText = "";
@@ -118,27 +144,19 @@ function corrige() {
   document.getElementById("posicao").innerText = "";
   document.getElementById("mensagem").innerText = "";
   document.getElementById("foto").style.display = "none";
+  tocarSom("somTecla"); // SOM DE CLIQUE CURTO
 }
 
-// Confirmação (O som é acionado UNICAMENTE aqui)
+// Tecla Confirma
 function confirma() {
   if (numeroDigitado.length === 1) {
     alert("Por favor, digite os 2 números correspondentes à seleção.");
     return;
   }
 
-  // Toca o som real apenas no clique do confirma verde
-  try {
-    const somConfirma = new Audio("./confirma-urna.mp3");
-    somConfirma.currentTime = 0;
-    somConfirma.play().catch(err => {
-      console.log("O navegador barrou a execução automática de áudio:", err);
-    });
-  } catch (erro) {
-    console.log("Erro ao inicializar o ficheiro de áudio:", erro);
-  }
+  // APENAS AQUI O SOM DE CONFIRMAÇÃO LONGO É DISPARADO
+  tocarSom("somConfirma"); 
 
-  // Contabilização dos votos
   if (numeroDigitado === "") {
     contagemVotos.BRANCO++;
   } else if (candidatos[numeroDigitado]) {
@@ -271,6 +289,7 @@ TOTAL GERAL DE VOTOS DA URNA: ${total}
   abrirRelatorio(texto);
 }
 
+// Teclado Físico
 window.addEventListener("keydown", (e) => {
   if (!isNaN(e.key) && e.key !== " ") {
     clicou(e.key);
