@@ -1,6 +1,3 @@
-/* ==========================================
-   CONFIGURAÇÕES GERAIS E RESETS
-   ========================================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -9,7 +6,7 @@
 }
 
 body {
-  background-color: #123424; /* Verde escuro de fundo da urna */
+  background-color: #123424;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,25 +15,18 @@ body {
   padding: 20px;
 }
 
-/* ==========================================
-   ESTRUTURA PRINCIPAL DA URNA
-   ========================================== */
 .urna {
-  background-color: #dbdbdb; /* Cinza claro da carcaça */
+  background-color: #dbdbdb;
   padding: 30px;
   border-radius: 15px;
   display: flex;
   gap: 25px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.5), 
-              inset 0 2px 5px rgba(255,255,255,0.5);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 2px 5px rgba(255,255,255,0.5);
   border: 4px solid #b5b5b5;
   max-width: 950px;
   width: 100%;
 }
 
-/* ==========================================
-   TELA DA URNA (MONITOR)
-   ========================================== */
 .tela {
   background-color: #fff;
   border: 10px solid #777;
@@ -50,7 +40,6 @@ body {
   min-height: 380px;
 }
 
-/* Cabeçalho fixo interno da tela */
 .titulo-tela {
   text-align: center;
   font-size: 20px;
@@ -61,22 +50,20 @@ body {
   margin-bottom: 10px;
 }
 
-/* Divisão do conteúdo interno (Esquerda e Direita) */
 .conteudo {
   display: flex;
   flex: 1;
   justify-content: space-between;
   align-items: stretch;
-  position: relative;
+  position: relative; /* Permite posicionar a foto em relação à tela */
 }
 
-/* Lado Esquerdo da Tela (Textos e Números) */
 .esquerda {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   flex: 1;
-  padding-right: 15px;
+  padding-right: 150px; /* Abre espaço para a foto não cobrir o texto */
 }
 
 .cargo {
@@ -85,7 +72,6 @@ body {
   margin-bottom: 15px;
 }
 
-/* Quadrados onde aparecem os números digitados */
 .numeros {
   display: flex;
   gap: 10px;
@@ -104,11 +90,6 @@ body {
   background-color: #fff;
 }
 
-/* Informações do candidato (País, Continente, Títulos) */
-.info {
-  margin-top: 5px;
-}
-
 .info p {
   font-size: 15px;
   margin-bottom: 8px;
@@ -120,50 +101,40 @@ body {
   color: #000;
 }
 
-/* Mensagens de alertas como VOTO NULO */
 .mensagem {
   font-size: 24px;
   font-weight: bold;
   color: #ff0000;
   margin-top: 10px;
-  animation: piscar 1s infinite alternate;
 }
 
-@keyframes piscar {
-  from { opacity: 1; }
-  to { opacity: 0.3; }
-}
-
-/* Rodapé de instruções da tela */
 .instrucoes {
   border-top: 2px solid #000;
   padding-top: 8px;
   font-size: 11px;
   color: #444;
   line-height: 1.4;
+  margin-top: 10px;
 }
 
-/* ==========================================
-   LADO DIREITO (MOLDURA DA BANDEIRA CORRIGIDA)
-   ========================================== */
+/* CONTAINER DA FOTO: Posicionado no topo direito igual à urna real */
 .direita {
-  width: 150px;
-  height: 110px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 140px;
+  height: 105px;
   display: flex;
+  align-items: center;
+  justify-content: center;
   
-  /* Sobe o elemento para alinhar perfeitamente ao topo (Igual Urna Real) */
-  align-self: flex-start; 
-  margin-top: 0px; 
-  
-  /* ESTADO INICIAL: Totalmente invisível e sem linhas */
-  border: 1px solid transparent;
+  /* ESTADO PADRÃO: Completamente invisível */
+  border: none;
   background-color: transparent;
   box-shadow: none;
-  overflow: hidden;
-  transition: all 0.15s ease-in-out;
 }
 
-/* ESTADO ATIVO: Ativado via Javascript apenas quando há foto */
+/* ESTADO VISÍVEL: Ativado apenas quando um candidato válido é digitado */
 .direita.visivel {
   border: 1px dashed #555;
   background-color: #faf8f5;
@@ -173,10 +144,10 @@ body {
 .direita img {
   width: 100%;
   height: 100%;
-  object-fit: fill; /* Garante o preenchimento proporcional da bandeira */
+  object-fit: fill;
+  display: none; /* Controlado pelo JS */
 }
 
-/* Tela de FIM da votação */
 .fim {
   display: flex;
   flex: 1;
@@ -189,9 +160,7 @@ body {
   height: 100%;
 }
 
-/* ==========================================
-   TECLADO FÍSICO DA URNA
-   ========================================== */
+/* TECLADO */
 .teclado {
   background-color: #212121;
   padding: 25px 15px;
@@ -224,7 +193,6 @@ body {
   border: none;
   box-shadow: 0 4px #000, 0 5px 5px rgba(0,0,0,0.5);
   user-select: none;
-  transition: background 0.1s;
 }
 
 .teclado-botao:active {
@@ -254,7 +222,6 @@ body {
   align-items: center;
   justify-content: center;
   user-select: none;
-  transition: transform 0.1s;
 }
 
 .btn-comando:active {
@@ -279,9 +246,6 @@ body {
   font-size: 13px;
 }
 
-/* ==========================================
-   PAINEL DE BOTÕES EXTERNOS (IMPRESSÃO)
-   ========================================== */
 .paineis-impressao {
   display: flex;
   gap: 15px;
@@ -298,14 +262,8 @@ body {
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0 4px #b7950b;
-  transition: background 0.2s, transform 0.1s;
 }
 
 .btn-impressao:hover {
   background-color: #f39c12;
-}
-
-.btn-impressao:active {
-  box-shadow: 0 1px #b7950b;
-  transform: translateY(3px);
 }
