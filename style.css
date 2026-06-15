@@ -19,7 +19,7 @@ body {
 }
 
 /* ==========================================
-   ESTRUTURA PRINCIPAL DA URNA
+   ESTRUTURA PRINCIPAL DA URNA (BELEZA DESIGN)
    ========================================== */
 .urna {
   background-color: #dbdbdb; /* Cinza claro da carcaça */
@@ -65,8 +65,8 @@ body {
   display: flex;
   flex: 1;
   justify-content: space-between;
-  align-items: stretch;
-  position: relative; /* Base de posicionamento para a foto absoluta */
+  align-items: center; /* Alinhamento centralizado vertical perfeito */
+  position: relative;
 }
 
 /* Lado Esquerdo da Tela (Textos e Números) */
@@ -75,7 +75,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   flex: 1;
-  padding-right: 155px; /* Evita que o texto encoste ou fique embaixo da foto */
+  padding-right: 15px;
 }
 
 .cargo {
@@ -134,29 +134,27 @@ body {
 }
 
 /* ==========================================
-   LADO DIREITO (MOLDURA DA BANDEIRA EVOLUÍDA)
+   LADO DIREITO (MOLDURA DA BANDEIRA DESIGN ATUALIZADO)
    ========================================== */
 .direita {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 140px;
-  height: 105px;
+  width: 150px;
+  height: 110px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  margin-top: -30px; /* Mantém o alinhamento estético centralizado que você gostou */
   
-  /* ESTADO PADRÃO: 100% invisível e transparente */
-  border: 1px solid transparent;
+  /* Mantém o espaço idêntico guardado, mas esconde a linha e o fundo cinza */
+  border: 1px solid transparent; 
   background-color: transparent;
   box-shadow: none;
-  transition: background-color 0.1s ease-in-out;
+  overflow: hidden;
+  transition: border-color 0.1s ease-in-out;
 }
 
-/* ESTADO ATIVO: A moldura ganha traços e fundo cinza claro apenas com a classe do JS */
+/* ESTADO ATIVO: A moldura bonita tracejada surge apenas quando o JavaScript manda */
 .direita.visivel {
-  border: 1px dashed #555;
+  border: 1px dashed #555; /* Estilo tracejado clássico da imagem */
   background-color: #faf8f5;
   box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
 }
@@ -164,7 +162,7 @@ body {
 .direita img {
   width: 100%;
   height: 100%;
-  object-fit: fill; /* Preenchimento proporcional perfeito da bandeira */
+  object-fit: fill; /* Garante o preenchimento total da bandeira na caixinha */
 }
 
 /* Tela de FIM da votação */
@@ -181,10 +179,10 @@ body {
 }
 
 /* ==========================================
-   TECLADO FÍSICO DA URNA
+   TECLADO FÍSICO DA URNA (ESTILIZADO)
    ========================================== */
 .teclado {
-  background-color: #212121; /* Preto asfalto do teclado */
+  background-color: #212121;
   padding: 25px 15px;
   display: flex;
   flex-direction: column;
@@ -194,14 +192,12 @@ body {
   width: 300px;
 }
 
-/* Alinhamento horizontal das teclas de números */
 .teclado-linha {
   display: flex;
   justify-content: center;
   gap: 15px;
 }
 
-/* Estilização padrão dos botões numéricos */
 .teclado-botao {
   background: linear-gradient(to bottom, #333, #1a1a1a);
   color: #fff;
@@ -224,7 +220,6 @@ body {
   transform: translateY(3px);
 }
 
-/* Área inferior de comandos da urna */
 .botoes-comando {
   display: flex;
   justify-content: space-between;
@@ -253,22 +248,21 @@ body {
   transform: scale(0.96);
 }
 
-/* Cores oficiais dos botões de comando */
 .btn-branco {
   background-color: #ffffff;
   box-shadow: 0 3px #b5b5b5;
 }
 
 .btn-corrige {
-  background-color: #e05c2b; /* Laranja urna */
+  background-color: #e05c2b;
   box-shadow: 0 3px #963511;
 }
 
 .btn-confirma {
-  background-color: #009c52; /* Verde urna */
+  background-color: #009c52;
   box-shadow: 0 3px #00592f;
-  height: 58px; /* Levemente maior que os outros comandos */
-  margin-top: -8px; /* Ajuste fino de posicionamento */
+  height: 58px;
+  margin-top: -8px;
   font-size: 13px;
 }
 
@@ -282,7 +276,7 @@ body {
 }
 
 .btn-impressao {
-  background-color: #f1c40f; /* Amarelo ouro */
+  background-color: #f1c40f;
   color: #000;
   border: none;
   padding: 12px 24px;
