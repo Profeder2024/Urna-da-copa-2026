@@ -57,18 +57,17 @@ const contagemVotos = {
   NULO: 0
 };
 
-// Inicializa contagem zerada
+// Inicializa a contagem zerada para todos os países
 for (let key in candidatos) {
   contagemVotos[key] = 0;
 }
 
-// CORREÇÃO DOS LINKS: Sons totalmente separados e distintos
+// Configuração do arquivo de som local armazenado na sua pasta
 const sons = {
- //  somTecla: "https://audio.code.org/click.mp3", // Som curto de clique de máquina
-  somConfirma: "https://assets.mixkit.co/active_storage/sfx/2568/2568-84.wav" // Som longo de confirmação (Pilili)
+  somConfirma: "confirma-urna.mp3"
 };
 
-// Reprodutor dinâmico inteligente
+// Reprodutor dinâmico inteligente (executa apenas no Confirma)
 function tocarSom(tipo) {
   try {
     const audioUrl = sons[tipo];
@@ -76,24 +75,23 @@ function tocarSom(tipo) {
       const somDinamico = new Audio(audioUrl);
       somDinamico.currentTime = 0;
       somDinamico.play().catch(err => {
-        console.log("Aguardando clique na tela para liberar o áudio.");
+        console.log("O navegador bloqueou a execução de áudio. Interaja com a página antes.");
       });
     }
   } catch (erro) {
-    console.log("Erro no áudio:", erro);
+    console.log("Erro ao processar o arquivo de áudio:", erro);
   }
 }
 
-// Teclas Numéricas
+// Teclas Numéricas (Silenciosas)
 function clicou(n) {
   if (numeroDigitado.length < 2) {
     numeroDigitado += n.toString();
     atualizarTela();
-    // tocarSom("somTecla"); // SOM DE CLIQUE CURTO
   }
 }
 
-// Atualizar Monitor
+// Atualização e renderização do monitor da urna eletrônica
 function atualizarTela() {
   document.getElementById("n1").innerText = numeroDigitado[0] || "";
   document.getElementById("n2").innerText = numeroDigitado[1] || "";
@@ -106,6 +104,7 @@ function atualizarTela() {
     document.getElementById("time").innerText = candidato.continente;
     document.getElementById("posicao").innerText = candidato.titulos;
 
+    // Busca o arquivo de imagem JPG correspondente na pasta local (Ex: 13.jpg)
     foto.src = `${numeroDigitado}.jpg`;
     foto.style.display = "block";
     document.getElementById("mensagem").innerText = "";
@@ -121,7 +120,7 @@ function atualizarTela() {
   }
 }
 
-// Tecla Branco
+// Botão de voto em Branco (Silencioso)
 function branco() {
   numeroDigitado = "";
   document.getElementById("n1").innerText = "";
@@ -131,10 +130,9 @@ function branco() {
   document.getElementById("posicao").innerText = "";
   document.getElementById("foto").style.display = "none";
   document.getElementById("mensagem").innerText = "";
-  // tocarSom("somTecla"); // SOM DE CLIQUE CURTO
 }
 
-// Tecla Corrige
+// Botão de corrigir a tela (Silencioso)
 function corrige() {
   numeroDigitado = "";
   document.getElementById("n1").innerText = "";
@@ -144,17 +142,16 @@ function corrige() {
   document.getElementById("posicao").innerText = "";
   document.getElementById("mensagem").innerText = "";
   document.getElementById("foto").style.display = "none";
-  // tocarSom("somTecla"); // SOM DE CLIQUE CURTO
 }
 
-// Tecla Confirma
+// Botão de confirmação (Gatilha o arquivo de áudio local mp3)
 function confirma() {
   if (numeroDigitado.length === 1) {
-    alert("Por favor, digite os 2 números correspondentes à seleção.");
+    alert("Por favor, preencha os 2 dígitos antes de confirmar.");
     return;
   }
 
-  // APENAS AQUI O SOM DE CONFIRMAÇÃO LONGO É DISPARADO
+  // Aciona o áudio local "confirma-urna.mp3"
   tocarSom("somConfirma"); 
 
   if (numeroDigitado === "") {
@@ -165,15 +162,18 @@ function confirma() {
     contagemVotos.NULO++;
   }
 
+  // Renderiza a tela de FIM da votação
   document.getElementById("conteudo").innerHTML = `
     <div class="fim">FIM</div>
   `;
 
+  // Aguarda 2.5 segundos e limpa o painel para o próximo eleitor
   setTimeout(() => {
     restaurarTela();
   }, 2500);
 }
 
+// Reconstrói a interface da tela original após o término da votação
 function restaurarTela() {
   numeroDigitado = "";
   document.getElementById("conteudo").innerHTML = `
@@ -196,20 +196,22 @@ function restaurarTela() {
   `;
 }
 
+// Cria códigos numéricos aleatórios para os relatórios de impressão
 function gerarProtocolo() {
   return Math.floor(Math.random() * 999999999);
 }
 
+// Processador de abertura dos relatórios impressos via Pop-up integrado
 function abrirRelatorio(texto) {
   const janela = window.open("", "", "width=500,height=700");
   if (!janela) {
-    alert("Por favor, ative as permissões de Pop-up do seu navegador para visualizar este relatório!");
+    alert("Por favor, autorize a exibição de Pop-ups neste navegador para emitir o documento!");
     return;
   }
   janela.document.write(`
     <html>
       <head>
-        <title>Relatório da Urna Oficial</title>
+        <title>Emissão de Relatório de Urna</title>
         <style>
           body { font-family: monospace; padding: 20px; background: #fff; color: #000; }
           button { padding: 10px 20px; margin-top: 20px; cursor: pointer; font-size: 16px; font-weight: bold; }
@@ -224,6 +226,7 @@ function abrirRelatorio(texto) {
   `);
 }
 
+// Emissão do relatório de Zerésima (Antes do início do pleito)
 function gerarZeresima() {
   let linhasCandidatos = "";
   for (let key in candidatos) {
@@ -232,7 +235,7 @@ function gerarZeresima() {
 
   let texto = `
 ====================================
-         ZERÉSIMA DA URNA
+          ZERÉSIMA DA URNA
 ====================================
 SIMULADOR COPA DO MUNDO 2026
 
@@ -252,6 +255,7 @@ COMPROVADO: URNA SEM VOTOS COMPUTADOS
   abrirRelatorio(texto);
 }
 
+// Emissão do Boletim de Urna (Apuração dos resultados salvos)
 function gerarBoletim() {
   let total = 0;
   let linhasCandidatos = "";
@@ -267,7 +271,7 @@ function gerarBoletim() {
 
   let texto = `
 ====================================
-         BOLETIM DE URNA
+          BOLETIM DE URNA
 ====================================
 SIMULADOR COPA DO MUNDO 2026
 
@@ -289,7 +293,7 @@ TOTAL GERAL DE VOTOS DA URNA: ${total}
   abrirRelatorio(texto);
 }
 
-// Teclado Físico
+// Sincronização e escuta ativa do teclado físico do computador
 window.addEventListener("keydown", (e) => {
   if (!isNaN(e.key) && e.key !== " ") {
     clicou(e.key);
