@@ -30,7 +30,7 @@ body {
 /* TELA DA URNA */
 .tela {
   width: 550px;
-  height: 420px; /* Altura fixa para manter estabilidade do layout */
+  height: 420px;
   background: #fff;
   border: 10px solid #888;
   padding: 20px;
@@ -111,8 +111,8 @@ body {
 
 /* LADO DIREITO (MOLDURA DA BANDEIRA RETANGULAR) */
 .direita {
-  width: 140px; /* Largura ideal para bandeiras proporção padrão */
-  height: 100px; /* Altura ideal retangular */
+  width: 140px;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -122,12 +122,12 @@ body {
   box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
 }
 
-/* CORREÇÃO CRÍTICA: Ajusta a imagem JPG para preencher a moldura sem distorcer ou ficar gigante */
+/* Ajusta a imagem para preencher a moldura mantendo proporções */
 .direita img {
   width: 100%;
   height: 100%;
-  object-fit: fill; /* Força o preenchimento retangular idêntico ao modelo original */
-  display: none; /* Mantém oculto até o JS disparar a renderização */
+  object-fit: fill;
+  display: none;
 }
 
 .mensagem {
@@ -184,7 +184,7 @@ body {
   grid-column: 2;
 }
 
-/* BOTÕES DE CONTROLE INFERIOR (BRANCO, CORRIGE, CONFIRMA) */
+/* BOTÕES DE CONTROLE INFERIOR */
 .funcoes {
   display: flex;
   gap: 10px;
@@ -262,7 +262,7 @@ body {
   background: #eab308;
 }
 
-/* ADAPTAÇÃO RESPONSIVA PARA DISPOSITIVOS MÓVEIS */
+/* ADAPTAÇÃO RESPONSIVA */
 @media (max-width: 900px) {
   .urna-container {
     flex-direction: column;
