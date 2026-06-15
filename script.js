@@ -98,6 +98,7 @@ function atualizarTela() {
 
   const candidato = candidatos[numeroDigitado];
   const foto = document.getElementById("foto");
+  const containerFoto = document.querySelector(".direita"); // Elemento da moldura
 
   if (candidato) {
     document.getElementById("nome").innerText = candidato.nome;
@@ -107,12 +108,19 @@ function atualizarTela() {
     // Busca o arquivo de imagem JPG correspondente na pasta local (Ex: 13.jpg)
     foto.src = `${numeroDigitado}.jpg`;
     foto.style.display = "block";
+    
+    // ATIVA A MOLDURA: Adiciona a classe que torna as bordas visíveis no CSS
+    if (containerFoto) containerFoto.classList.add("visivel");
+    
     document.getElementById("mensagem").innerText = "";
   } else {
     document.getElementById("nome").innerText = "";
     document.getElementById("time").innerText = "";
     document.getElementById("posicao").innerText = "";
     foto.style.display = "none";
+    
+    // DESATIVA A MOLDURA: Remove a classe fazendo a borda desaparecer
+    if (containerFoto) containerFoto.classList.remove("visivel");
 
     if (numeroDigitado.length === 2) {
       document.getElementById("mensagem").innerText = "VOTO NULO";
@@ -122,13 +130,18 @@ function atualizarTela() {
 
 // Botão de voto em Branco (Silencioso)
 function branco() {
-  numeroDigitado = "";
+  numeroDigitated = "";
   document.getElementById("n1").innerText = "";
   document.getElementById("n2").innerText = "";
   document.getElementById("nome").innerText = "VOTO EM BRANCO";
   document.getElementById("time").innerText = "";
   document.getElementById("posicao").innerText = "";
   document.getElementById("foto").style.display = "none";
+  
+  // Garante que a moldura suma no voto em branco
+  const containerFoto = document.querySelector(".direita");
+  if (containerFoto) containerFoto.classList.remove("visivel");
+  
   document.getElementById("mensagem").innerText = "";
 }
 
@@ -142,6 +155,10 @@ function corrige() {
   document.getElementById("posicao").innerText = "";
   document.getElementById("mensagem").innerText = "";
   document.getElementById("foto").style.display = "none";
+  
+  // Garante que a moldura suma ao corrigir
+  const containerFoto = document.querySelector(".direita");
+  if (containerFoto) containerFoto.classList.remove("visivel");
 }
 
 // Botão de confirmação (Gatilha o arquivo de áudio local mp3)
@@ -194,6 +211,10 @@ function restaurarTela() {
       <img id="foto" src="" alt="Bandeira da Seleção">
     </div>
   `;
+  
+  // Força a nova moldura injetada a nascer oculta/sem a classe visivel
+  const containerFoto = document.querySelector(".direita");
+  if (containerFoto) containerFoto.classList.remove("visivel");
 }
 
 // Cria códigos numéricos aleatórios para os relatórios de impressão
