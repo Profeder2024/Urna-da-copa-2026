@@ -143,37 +143,40 @@ body {
   line-height: 1.4;
 }
 
-/* Lado Direito da Tela (Moldura e Imagem da Bandeira) */
+/* ==========================================
+   LADO DIREITO (MOLDURA DA BANDEIRA ATUALIZADA)
+   ========================================== */
 .direita {
   width: 150px;
   height: 110px;
-  display: flex;
   
-  /* Sobe a moldura para o topo da tela igual ao layout real */
-  margin-top: -30px; 
-  align-items: flex-start;
-  justify-content: center;
+  /* Mantém a foto no topo igual à urna real */
+  margin-top: 0px; 
+  align-self: flex-start;
   
-  border: 1px dashed #555;
-  background-color: #faf8f5;
+  /* Por padrão, a moldura começa COMPLETAMENTE INVISÍVEL */
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
   overflow: hidden;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
-  transition: all 0.2s ease-in-out;
 }
 
 .direita img {
   width: 100%;
   height: 100%;
-  object-fit: fill; /* Preenche perfeitamente o retângulo */
-  display: none; /* Controlado dinamicamente pelo Javascript */
+  object-fit: fill;
+  display: none;
 }
 
-/* REGRA DE INVISIBILIDADE: Oculta a moldura se a imagem interna estiver oculta */
-.direita:has(img[style*="display: none"]),
-.direita:has(img:not([style*="display: block"])) {
-  border: none;
-  background-color: transparent;
-  box-shadow: none;
+/* REGRA DE OURO INFALÍVEL: Quando a imagem ganha um "src" preenchido pelo JS, a moldura ganha vida! */
+.direita:has(img[src^="0"]),
+.direita:has(img[src^="1"]),
+.direita:has(img[src^="2"]),
+.direita:has(img[src^="3"]),
+.direita:has(img[src^="4"]) {
+  border: 1px dashed #555;
+  background-color: #faf8f5;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
 }
 
 /* Tela de FIM da votação */
@@ -189,12 +192,11 @@ body {
   height: 100%;
 }
 
-
 /* ==========================================
    TECLADO FÍSICO DA URNA
    ========================================== */
 .teclado {
-  background-color: #212121; /* Preto asfalto do teclado */
+  background-color: #212121;
   padding: 25px 15px;
   display: flex;
   flex-direction: column;
@@ -204,14 +206,12 @@ body {
   width: 300px;
 }
 
-/* Alinhamento das linhas de botões numéricos (1 a 9) */
 .teclado-linha {
   display: flex;
   justify-content: center;
   gap: 15px;
 }
 
-/* Estilização padrão de todas as teclas da urna */
 .teclado-botao {
   background: linear-gradient(to bottom, #333, #1a1a1a);
   color: #fff;
@@ -235,7 +235,6 @@ body {
   transform: translateY(3px);
 }
 
-/* Configurações específicas da linha de comandos (Branco, Corrige, Confirma) */
 .botoes-comando {
   display: flex;
   justify-content: space-between;
@@ -265,25 +264,23 @@ body {
   transform: scale(0.96);
 }
 
-/* Cores oficiais dos botões de comando */
 .btn-branco {
   background-color: #ffffff;
   box-shadow: 0 3px #b5b5b5;
 }
 
 .btn-corrige {
-  background-color: #e05c2b; /* Laranja oficial */
+  background-color: #e05c2b;
   box-shadow: 0 3px #963511;
 }
 
 .btn-confirma {
-  background-color: #009c52; /* Verde oficial */
+  background-color: #009c52;
   box-shadow: 0 3px #00592f;
-  height: 58px; /* O botão confirma é levemente mais alto */
-  margin-top: -8px; /* Ajusta o alinhamento devido à altura extra */
+  height: 58px;
+  margin-top: -8px;
   font-size: 13px;
 }
-
 
 /* ==========================================
    PAINEL DE BOTÕES EXTERNOS (IMPRESSÃO)
@@ -295,7 +292,7 @@ body {
 }
 
 .btn-impressao {
-  background-color: #f1c40f; /* Amarelo ouro */
+  background-color: #f1c40f;
   color: #000;
   border: none;
   padding: 12px 24px;
